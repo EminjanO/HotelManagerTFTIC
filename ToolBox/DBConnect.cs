@@ -31,7 +31,7 @@ namespace ToolDataBase
             SqlCommand cmd = db.CreateCommand();
 
             cmd.CommandText = RequestSQL.Query;
-            cmd.CommandType = System.Data.CommandType.Text;
+            cmd.CommandType = CommandType.Text;
 
             foreach (KeyValuePair<string, object> param in RequestSQL.Params)
             {
@@ -45,7 +45,7 @@ namespace ToolDataBase
         {
             SqlCommand cmd = db.CreateCommand();
             cmd.CommandText = RequestSQL.Query;
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.CommandType = CommandType.StoredProcedure;
 
             foreach (KeyValuePair<string, object> param in RequestSQL.Params)
             {

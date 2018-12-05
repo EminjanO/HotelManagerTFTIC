@@ -43,6 +43,10 @@
     <Compile Include="Entity\Booking.cs" />
     <Compile Include="Entity\Guest.cs" />
     <Compile Include="Entity\Profil.cs" />
+    <Compile Include="Entity\Room.cs" />
+    <Compile Include="Entity\StateRoom.cs" />
+    <Compile Include="Entity\TypeRoom.cs" />
+    <Compile Include="Entity\User.cs" />
     <Compile Include="Interface\IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
