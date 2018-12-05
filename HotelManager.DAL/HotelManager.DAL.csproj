@@ -40,7 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\Booking.cs" />
+    <Compile Include="Entity\Guest.cs" />
+    <Compile Include="Entity\Profil.cs" />
+    <Compile Include="Interface\IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ToolBox\ToolBox.csproj">
+      <Project>{e39b4005-3b88-4dbc-a1b9-0b6958e3b7aa}</Project>
+      <Name>ToolBox</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repository\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
