@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelManager", "HotelManager\HotelManager.csproj", "{8A66AB13-7AA9-4340-860C-8AC68961C81C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolBox", "ToolBox\ToolBox.csproj", "{E39B4005-3B88-4DBC-A1B9-0B6958E3B7AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelManager.DAL", "HotelManager.DAL\HotelManager.DAL.csproj", "{CBF4F295-71FE-43A0-9ED0-2C091EB1DBE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{8A66AB13-7AA9-4340-860C-8AC68961C81C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A66AB13-7AA9-4340-860C-8AC68961C81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A66AB13-7AA9-4340-860C-8AC68961C81C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E39B4005-3B88-4DBC-A1B9-0B6958E3B7AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E39B4005-3B88-4DBC-A1B9-0B6958E3B7AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E39B4005-3B88-4DBC-A1B9-0B6958E3B7AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E39B4005-3B88-4DBC-A1B9-0B6958E3B7AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBF4F295-71FE-43A0-9ED0-2C091EB1DBE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBF4F295-71FE-43A0-9ED0-2C091EB1DBE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBF4F295-71FE-43A0-9ED0-2C091EB1DBE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBF4F295-71FE-43A0-9ED0-2C091EB1DBE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
