@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CBF4F295-71FE-43A0-9ED0-2C091EB1DBE2}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HotelManager.DAL</RootNamespace>
-    <AssemblyName>HotelManager.DAL</AssemblyName>
+    <ProjectGuid>{B212531B-4B81-47DE-A5ED-2110379EAC67}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>DebugConsole</RootNamespace>
+    <AssemblyName>DebugConsole</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -40,24 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entity\Booking.cs" />
-    <Compile Include="Entity\Guest.cs" />
-    <Compile Include="Entity\Profil.cs" />
-    <Compile Include="Entity\Room.cs" />
-    <Compile Include="Entity\StateRoom.cs" />
-    <Compile Include="Entity\TypeRoom.cs" />
-    <Compile Include="Entity\User.cs" />
-    <Compile Include="Interface\IEntity.cs" />
-    <Compile Include="Interface\IRepository.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\GuestRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ToolBox\ToolBox.csproj">
-      <Project>{e39b4005-3b88-4dbc-a1b9-0b6958e3b7aa}</Project>
-      <Name>ToolBox</Name>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HotelManager.DAL\HotelManager.DAL.csproj">
+      <Project>{cbf4f295-71fe-43a0-9ed0-2c091eb1dbe2}</Project>
+      <Name>HotelManager.DAL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

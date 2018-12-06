@@ -4,17 +4,17 @@ CREATE PROCEDURE InsertGuest
 	@firstname varchar(60),
 	@lastname varchar(60),
 	@email varchar(255),
-	@phone int,
-	@add_info varchar(255),
-	@created_at datetime,
-	@last_update datetime
+	@phone varchar(50),
+	@add_info varchar(255) = NULL
 AS   
     SET NOCOUNT ON;
 	DECLARE @guestID as INT
-    INSERT INTO guest (firstname, lastname, email, phone, add_info, created_at, last_update, isActive) VALUES (@firstname, @lastname, @email, @phone, @add_info, @created_at, @last_update, 1);  
+    INSERT INTO guest (firstname, lastname, email, phone, add_info) VALUES (@firstname, @lastname, @email, @phone, ISNULL(@add_info, NULL));
 	SET @guestID = @@IDENTITY;
 	SELECT @guestID ;
 GO
+
+EXECUTE InsertGuest 'Eminjan', 'Eminjan', 'Emin.Emin@Eminjan.com', '05430163854', NULL   
 
 USE HotelManager;  
 GO 
