@@ -13,15 +13,15 @@ namespace HotelManager.DAL.Entity
         public DateTime Check_in { get; set; }
         public DateTime Check_out { get; set; }
         public int Nb_night { get; set; }
-        public int Nb_personne { get; set; }
+        public int Nb_person { get; set; }
         public string Add_info { get; set; }
-        public int Id_guest { get; set; }
-        public int Id_room { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Last_update { get; set; }
         public bool IsCreated { get; set; }
         public bool IsActive { get; set; }
         public bool HasPayed { get; set; }
+        public int Id_guest { get; set; }
+        public int Id_room { get; set; }
         public bool Id_user { get; set; }
 
     }

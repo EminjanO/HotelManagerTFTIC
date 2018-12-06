@@ -17,6 +17,6 @@ namespace HotelManager.DAL.Entity
         public string Add_info { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Last_update { get; set; }
-
+        public bool IsActive { get; set; }
     }
 }

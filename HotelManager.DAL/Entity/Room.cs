@@ -12,9 +12,10 @@ namespace HotelManager.DAL.Entity
         public int Id { get; set; }
         public string Num { get; set; }
         public string Add_info { get; set; }
-        public int Id_type_room { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Last_update { get; set; }
+        public bool IsActive { get; set; }
         public int Id_state_room { get; set; }
+        public int Id_type_room { get; set; }
     }
 }

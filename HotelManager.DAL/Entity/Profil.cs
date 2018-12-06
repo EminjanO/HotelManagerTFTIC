@@ -10,7 +10,8 @@ namespace HotelManager.DAL.Entity
     public class Profil : IEntity<int>
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string description { get; set; }
+        public string Profil_Name { get; set; }
+        public string Description { get; set; }
+        public bool IsActive { get; set; }
     }
 }
