@@ -22,7 +22,7 @@ namespace HotelManager.DAL.Entity
         public bool HasPayed { get; set; }
         public int Id_guest { get; set; }
         public int Id_room { get; set; }
-        public bool Id_user { get; set; }
+        public int Id_user { get; set; }
 
     }
 }

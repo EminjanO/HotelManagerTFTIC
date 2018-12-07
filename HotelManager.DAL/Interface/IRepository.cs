@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HotelManager.DAL.Interface;
 
 namespace HotelManager.DAL.Interface
 {
-    public interface IRepository<T, TKey> where TKey:struct
+    public interface IRepository<TEntity, TKey> where TEntity : IEntity<TKey>
     {
-        T Get(TKey id);
-        IEnumerable<T> GetAll();
-        int Insert(T entity);
-        bool Update(T entity);
-        bool Delete(T entity);
+        TEntity Get(TKey id);
+        IEnumerable<TEntity> GetAll();
+        int Insert(TEntity entity);
+        bool Update(TEntity entity);
+        bool Delete(TEntity entity);
+        bool Delete(TKey id);
     }
 }

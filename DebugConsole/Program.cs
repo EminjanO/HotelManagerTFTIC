@@ -13,18 +13,9 @@ namespace DebugConsole
     {
         static void Main(string[] args)
         {
-            GuestRepository repo = new GuestRepository();
-            //List<Guest> gs = (List<Guest>)repo.GetAll();
 
-            //foreach (Guest g in gs)
+            //Guest ginsert = new Guest
             //{
-            //    foreach (PropertyInfo item in g.GetType().GetProperties())
-            //    {
-            //        Console.WriteLine(item.GetValue(g));
-            //    }
-            //}
-
-            //Guest g = new Guest {
             //    FirstName = "Marie",
             //    LastName = "Antoinette",
             //    Email = "M.A2@yolo.com",
@@ -34,14 +25,23 @@ namespace DebugConsole
             //    Last_update = DateTime.Now,
             //    IsActive = true
             //};
+            //int gint = UnitOfWork.Instance.GuestRepository.Insert(ginsert);
+            //Console.WriteLine(gint);
 
-            Guest g1 = repo.Get(12);
-            g1.FirstName = "YOLO";
-            g1.Add_info = null;
+            //Guest g = UnitOfWork.Instance.GuestRepository.Get(1);
+            User g = UnitOfWork.Instance.UserRepository.Get(1);
 
-            Console.WriteLine(repo.Delete(g1)); 
+            List<User> gs = UnitOfWork.Instance.UserRepository.GetAll().ToList();
 
 
+            foreach (User guest in gs)
+            {
+                Console.WriteLine("----");
+                foreach (PropertyInfo item in guest.GetType().GetProperties())
+                {
+                    Console.WriteLine(item.GetValue(guest));
+                }
+            }
             Console.ReadLine();
         }
     }
