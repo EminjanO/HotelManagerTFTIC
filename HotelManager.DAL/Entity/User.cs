@@ -12,8 +12,8 @@ namespace HotelManager.DAL.Entity
         public int Id { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
-        public DateTime Created_at { get; set; }
-        public DateTime Last_update { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime LastUpdate { get; set; }
         public bool IsActive { get; set; }
         public int Id_profil { get; set; }
     }

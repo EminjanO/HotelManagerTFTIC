@@ -81,11 +81,11 @@ namespace HotelManager.DAL.Repository
             DBConnect Connection = new DBConnect(@"Data Source = FORMA704\TFTIC; Initial Catalog = HotelManager; User ID = sa; Password = tftic@2012");
             Command cmd = new Command($"UPDATE guest SET firstname = @firstname, lastname = @lastname , email = @email, phone = @phone, add_info = '{addinfo}', last_update = '{DateTime.Now}' WHERE id = @id");
 
-            cmd.AddParameter("@id", entity.Id);
-            cmd.AddParameter("@firstname", entity.FirstName);
-            cmd.AddParameter("@lastname", entity.LastName);
-            cmd.AddParameter("@email", entity.Email);
-            cmd.AddParameter("@phone", entity.Phone);
+            cmd.AddParameter("@id",         entity.Id);
+            cmd.AddParameter("@firstname",  entity.FirstName);
+            cmd.AddParameter("@lastname",   entity.LastName);
+            cmd.AddParameter("@email",      entity.Email);
+            cmd.AddParameter("@phone",      entity.Phone);
 
             return Connection.ExecuteNonQuery(cmd) == 0 ? false : true;
         }
@@ -97,7 +97,7 @@ namespace HotelManager.DAL.Repository
             DBConnect Connection = new DBConnect(@"Data Source = FORMA704\TFTIC; Initial Catalog = HotelManager; User ID = sa; Password = tftic@2012");
             Command cmd = new Command("DELETE guest WHERE id = @id");
 
-            cmd.AddParameter("@id", entity.Id);
+            cmd.AddParameter("@id",         entity.Id);
 
             return Connection.ExecuteNonQuery(cmd) == 0 ? false : true;
         }

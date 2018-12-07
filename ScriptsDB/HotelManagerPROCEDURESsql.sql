@@ -14,7 +14,19 @@ AS
 	SELECT @guestID ;
 GO
 
-EXECUTE InsertGuest 'Eminjan', 'Eminjan', 'Emin.Emin@Eminjan.com', '05430163854', NULL   
+GO 
+CREATE PROCEDURE InsertProfil
+	@profil_name varchar(20),
+	@description varchar(max)
+AS   
+    SET NOCOUNT ON;
+	DECLARE @profilID as INT
+    INSERT INTO profil (profil_name, description) VALUES (@profil_name, @description);
+	SET @profilID = @@IDENTITY;
+	SELECT @profilID ;
+GO
+
+EXECUTE InsertGuest 'Jean-jacques', 'Chocolat', 'jean.jean@Eminjan.com', '05555163854', NULL   
 
 USE HotelManager;  
 GO 
@@ -37,6 +49,24 @@ CREATE PROCEDURE InsertBooking
 	@check_in date,
 	@check_out date,
 	@nb_person int,
+	@add_info varchar(255),
+	@id_guest int,
+	@id_room int,
+	@id_user int
+AS   
+    SET NOCOUNT ON;
+	DECLARE @bookingID as INT
+    INSERT INTO Booking (check_in, check_out, nb_night, nb_person, add_info, id_guest, id_room, id_user) VALUES (@check_in, @check_out, DATEDIFF(day, @check_out, @check_in ), @nb_person, @add_info, @id_guest, @id_room, @id_user);  
+	SET @bookingID = @@IDENTITY;
+	SELECT @bookingID ;
+GO
+
+USE HotelManager;  
+GO 
+CREATE PROCEDURE InsertTypeRoom
+	@type_name varchar(20),
+	@capacity int,
+	@price decimal,
 	@add_info varchar(255),
 	@id_guest int,
 	@id_room int,
