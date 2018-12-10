@@ -76,7 +76,7 @@ namespace HotelManager.DAL.Repository
         #endregion
         private UnitOfWork()
         {
-            _db = new DBConnect(@"Data Source = FORMA704\TFTIC; Initial Catalog = HotelManager; User ID = sa; Password = tftic@2012");
+            _db = new DBConnect(@"Data Source=hotelmanagerserver.database.windows.net;Initial Catalog=HotelManagerDB;User ID=william;Password=test1234=");
         }
     }
 }
