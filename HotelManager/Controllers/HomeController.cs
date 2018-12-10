@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelManager.DAL.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,9 +16,9 @@ namespace HotelManager.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            
 
-            return View();
+            return View(UnitOfWork.Instance.GuestRepository.Get(1));
         }
 
         public ActionResult Contact()
