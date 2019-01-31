@@ -16,5 +16,7 @@ namespace HotelManager.DAL.Entity
         public DateTime LastUpdate { get; set; }
         public bool IsActive { get; set; }
         public int Id_profil { get; set; }
+        public string Email { get; set; }
+        public string HashPassword { get; set; }
     }
 }

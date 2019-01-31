@@ -45,6 +45,7 @@
     <Compile Include="Entity\Profil.cs" />
     <Compile Include="Entity\Room.cs" />
     <Compile Include="Entity\StateRoom.cs" />
+    <Compile Include="Entity\STBookingGuest.cs" />
     <Compile Include="Entity\TypeRoom.cs" />
     <Compile Include="Entity\User.cs" />
     <Compile Include="Interface\IEntity.cs" />
@@ -60,9 +61,11 @@
     <Compile Include="Interface\IUserRepository.cs" />
     <Compile Include="Interface\IBookingRepository.cs" />
     <Compile Include="Interface\IRoomRepository.cs" />
+    <Compile Include="Interface\ISTBookingGuestRepository.cs" />
     <Compile Include="Repository\ProfilRepository.cs" />
     <Compile Include="Repository\RoomRepository.cs" />
     <Compile Include="Repository\StateRoomRepository.cs" />
+    <Compile Include="Repository\STBookingGuestRepository.cs" />
     <Compile Include="Repository\TypeRoomRepository.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
     <Compile Include="Repository\UserRepository.cs" />

@@ -1,0 +1,9 @@
+C:\Users\forma704\Source\Repos\HotelManager\HotelManager.DAL\bin\Debug\HotelManager.DAL.dll
+C:\Users\forma704\Source\Repos\HotelManager\HotelManager.DAL\bin\Debug\HotelManager.DAL.pdb
+C:\Users\forma704\Source\Repos\HotelManager\HotelManager.DAL\bin\Debug\ToolBox.dll
+C:\Users\forma704\Source\Repos\HotelManager\HotelManager.DAL\bin\Debug\ToolBox.pdb
+C:\Users\forma704\Source\Repos\HotelManager\HotelManager.DAL\obj\Debug\HotelManager.DAL.csprojAssemblyReference.cache
+C:\Users\forma704\Source\Repos\HotelManager\HotelManager.DAL\obj\Debug\HotelManager.DAL.csproj.CoreCompileInputs.cache
+C:\Users\forma704\Source\Repos\HotelManager\HotelManager.DAL\obj\Debug\HotelManager.DAL.csproj.CopyComplete
+C:\Users\forma704\Source\Repos\HotelManager\HotelManager.DAL\obj\Debug\HotelManager.DAL.dll
+C:\Users\forma704\Source\Repos\HotelManager\HotelManager.DAL\obj\Debug\HotelManager.DAL.pdb

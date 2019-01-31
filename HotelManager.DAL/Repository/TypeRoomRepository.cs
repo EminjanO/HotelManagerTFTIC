@@ -16,6 +16,13 @@ namespace HotelManager.DAL.Repository
 
         }
 
+        //public TypeRoom Get(string name)
+        //{
+        //    Command cmd = new Command("SELECT * FROM Type_room WHERE Type_Name = @Type_Name");
+
+        //    return
+        //}
+
         public override int Insert(TypeRoom entity)
         {
             Command cmd = new Command($"INSERT INTO type_room (type_name, capacity, price, kitchen, tub) VALUES (@type_name, @capacity, @price, @kitchen, @tub)");

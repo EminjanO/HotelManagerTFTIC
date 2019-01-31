@@ -8,5 +8,6 @@ namespace HotelManager.DAL.Interface
         User Convert(Dictionary<string, object> Data);
         int Insert(User entity);
         bool Update(User entity);
+        User CheckUser(string email, string password);
     }
 }

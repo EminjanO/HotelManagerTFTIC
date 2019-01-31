@@ -14,13 +14,31 @@ namespace HotelManager.DAL.Repository
         public UserRepository(DBConnect db) : base(db) { }
         public override int Insert(User entity)
         {
-            Command cmd = new Command($"EXECUTE InsertUser @firstname, @lastname, @id_profil");
+            Command cmd = new Command($"EXECUTE AddUser @firstname, @lastname, @id_profil, @email, @password");
             cmd.AddParameter("@firstname", entity.FirstName);
             cmd.AddParameter("@lastname", entity.LastName);
             cmd.AddParameter("@id_profil", entity.Id_profil);
+            cmd.AddParameter("@email", entity.Email);
+            cmd.AddParameter("@password", entity.HashPassword);
 
             return DB.ExecuteScalar<int>(cmd);
         }
+
+        public User CheckUser(string email, string password)
+        {
+            Command cmd = new Command($"EXECUTE CheckUser @email, @password");
+            cmd.AddParameter("@email", email);
+            cmd.AddParameter("@password", password);
+
+            List<Dictionary<string, object>> datas = DB.ExecuteReader(cmd);
+            if (datas.Count == 1)
+            {
+                return Convert(datas[0]);
+            }
+
+            return default(User);
+        }
+
 
         public override bool Update(User entity)
         {
@@ -43,7 +61,9 @@ namespace HotelManager.DAL.Repository
                 CreatedAt = (DateTime)Data["create_date"],
                 LastUpdate = (DateTime)Data["last_update"],
                 IsActive = (bool)Data["isActive"],
-                Id_profil = (int)Data["id_profil"]
+                Id_profil = (int)Data["id_profil"],
+                Email = (string)Data["Email"],
+                HashPassword = null
             };
         }
     }

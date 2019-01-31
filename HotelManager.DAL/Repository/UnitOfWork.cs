@@ -74,6 +74,14 @@ namespace HotelManager.DAL.Repository
             get { return _userRepository = _userRepository ?? new UserRepository(_db); }
         }
         #endregion
+        #region STBookingGuestRepository
+        private ISTBookingGuestRepository _sTBookingGuestRepository;
+
+        public ISTBookingGuestRepository STBookingGuestRepository
+        {
+            get { return _sTBookingGuestRepository = _sTBookingGuestRepository ?? new STBookingGuestRepository(_db); }
+        }
+        #endregion
         private UnitOfWork()
         {
             _db = new DBConnect(@"Data Source=hotelmanagerserver.database.windows.net;Initial Catalog=HotelManagerDB;User ID=william;Password=test1234=");

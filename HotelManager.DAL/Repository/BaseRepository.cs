@@ -43,7 +43,7 @@ namespace HotelManager.DAL.Repository
         #region Delete
         public virtual bool Delete(TKey id)
         {
-            Command cmd = new Command($"DELETE [{TableName}] WHERE id = @id");
+            Command cmd = new Command($"DELETE FROM [{TableName}] WHERE id = @id");
             cmd.AddParameter("@id", id);
             return DB.ExecuteNonQuery(cmd) == 0 ? false : true;
         }
