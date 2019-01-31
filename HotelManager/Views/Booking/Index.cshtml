@@ -1,0 +1,499 @@
+﻿@model HotelManager.Models.IndexBookingVM
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div id="calender"></div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><span id="eventTitle"></span></h4>
+            </div>
+
+            <div class="modal-body">
+                <button id="btnDelete" class="btn btn-default btn-sm pull-right">
+                    <span class="glyphicon glyphicon-remove"></span> Delete
+                </button>
+                <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
+                    <span class="glyphicon glyphicon-pencil"></span> Edit
+                </button>
+                <p id="pDetails"></p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModalSave" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="padding:20px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Save Event</h4>
+            </div>
+            <div class="modal-body">
+                <form class="col-12 form-horizontal">
+                    <input type="hidden" id="hdRoomID" value="0" />
+                    <input type="hidden" id="hdGuestId" value="0" />
+                    <input type="hidden" id="hdUserId" value="0" />
+                    <input type="hidden" id="hdBookingId" value="0" />
+                    <input type="hidden" id="hdIsActiveBooking" value="0" />
+                    <input type="hidden" id="hdIsCreatedBooking" value="0" />
+                    <input type="hidden" id="hdHasPayedBooking" value="0" />
+                    <div class="form-group">
+                        <label>From</label>
+                        <div class="input-group date" id="dtp1">
+                            <input type="text" id="txtStart" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>To</label>
+                        <div class="input-group date" id="dtp2">
+                            <input type="text" id="txtEnd" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Person</label>
+                        <input type="number" id="txtNbPerson" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" id="txtFirstName" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" id="txtLastName" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" id="txtEmail" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" id="txtPhone" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Guest Information</label>
+                        <input type="text" id="txtAddInfo" class="form-control" />
+                    </div>
+
+                    <button type="button" id="btnSave" class="btn btn-success">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<link href="~/Content/fullcalendar.css" rel="stylesheet" />
+    <link href="~/Content/fullcalendar.print.css" rel="stylesheet" media="print" />*@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+@section Scripts{
+    @*<script src="~/Scripts/moment.min.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>*@
+    @*<script src="~/Scripts/fullcalendar.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var events = [];
+            var resources = [];
+
+            var selectedEvent = null;
+            FetchEventAndRenderCalendar();
+
+            function FetchEventAndRenderCalendar() {
+                events = [];
+                resources = []
+                $.ajax
+                    ({
+                        type: "GET",
+                        url: "/booking/getJson",
+                        success: function (data) {
+                            var result = data;
+                            for (var i = 0; i < data["bookingVMs"].length; i++) {
+
+                                events.push({
+                                    eventID:        +result["bookingVMs"][i]["BookingId"],
+                                    title: result["bookingVMs"][i]["GuestFirstName"] + " " + result["bookingVMs"][i]["GuestLastName"],
+                                    NbPerson:       +result["bookingVMs"][i]["BookingNBPerson"],
+                                    GuestFirstName:  result["bookingVMs"][i]["GuestFirstName"],
+                                    GuestLastName:   result["bookingVMs"][i]["GuestLastName"],
+                                    GuestInfo:       result["bookingVMs"][i]["GuestInfo"],
+                                    GuestEmail:      result["bookingVMs"][i]["GuestEmail"],
+                                    GuestPhone:      result["bookingVMs"][i]["GuestPhone"],
+                                    description:     result["bookingVMs"][i]["BookingAddInfo"],
+                                    user_id:        +result["bookingVMs"][i]["UserId"],
+                                    BookingHasPayed: result["bookingVMs"][i]["BookingHasPayed"],
+                                    TypeRoomName:   result["bookingVMs"][i]["RoomType"],
+                                    resourceId:     +result["bookingVMs"][i]["RoomId"],
+                                    client_id:      +result["bookingVMs"][i]["GuestId"],
+                                    isActive:        result["bookingVMs"][i]["BookingIsActive"],
+                                    isCreated:       result["bookingVMs"][i]["BookingIsCreated"],
+                                    start:          moment(result["bookingVMs"][i]["BookingCheckin"]),
+                                    end:            moment(result["bookingVMs"][i]["BookingCheckOut"]),
+                                    color: result["bookingVMs"][i]["BookingHasPayed"] == true ? "green" : "orange"
+                                });
+                            }
+
+                            for (var i = 0; i < result["roomtypeVMs"].length; i++) {
+
+                                for (var j = 0; j < result["roomtypeVMs"][i]["Rooms"].length; j++) {
+
+                                    resources.push({
+                                        id: result["roomtypeVMs"][i]["Rooms"][j]["Id"],
+                                        building: result["roomtypeVMs"][i]["TypeRoomName"],
+                                        title: result["roomtypeVMs"][i]["Rooms"][j]["Num"]
+                                    });
+
+                                }
+                            }
+                            GenerateCalender(events, resources);
+                        },
+                        error: function (error) { alert('failed'); }
+                    });
+            }
+
+            function GenerateCalender(events, resources) {
+                $('#calender').fullCalendar('destroy');
+                $('#calender').fullCalendar({
+                    eventOverlap : false,
+                    editable: true,
+
+                    resourceRender: function (resourceObj, labelTds, bodyTds) {
+                        labelTds.on('click', function () {
+                            console.log('click');
+                            console.log(resourceObj);
+
+                            window.location.href = "http://localhost:65337/Room/index/" + resourceObj.id.replace(/\s/g, '');
+                        });
+                    },
+
+                    eventDrop: function (event, delta, revertFunc) {
+
+                        alert(event.title + " was dropped on " + event.start.format());
+                        //console.log(event.start.toJSON());
+                        //console.log(event.end.toJSON());
+                        //console.log(delta);
+                        $.ajax({
+                            type: "POST",
+                            url: '/booking/ChangeBookingTime',
+                            data: {
+                                'Id': event.eventID,
+                                'UserId': event.user_id,
+                                'RoomId': event.resourceId,
+                                'GuestId': event.client_id,
+                                'BookingHasPayed': event.BookingHasPayed,
+                                'BookingIsCreated': true,
+                                'CheckIn': event.start.toJSON(),
+                                'CheckOut': event.end.toJSON(),
+                                'BookingInfo': event.description,
+                                'NbPerson': event.NbPerson,
+                                'GuestFirstName': event.GuestFirstName,
+                                'GuestLastName': event.GuestLastName,
+                                'Email': event.GuestEmail,
+                                'GuestPhone': event.GuestPhone,
+                                'GuestInfo': event.GuestInfo,
+                            },
+                            success: function (data) {
+                                //console.log(data.status);
+                                if (data.status) {
+                                    confirm(event.eventID  + " est changé par le user  "+ event.user_id);
+                                    //Refresh the calender
+                                    FetchEventAndRenderCalendar();
+                                    $('#myModalSave').modal('hide');
+                                }
+                            },
+                            error: function () {
+                                alert('Failed');
+                            }
+                        });
+                    },
+                    eventResize: function (event, delta, revertFunc) {
+
+                        alert(event.title + " was dropped on " + event.start.format());
+                        console.log(event.start.toJSON());
+                        console.log(event.end.toJSON());
+                        console.log(delta);
+                        $.ajax({
+                            type: "POST",
+                            url: '/booking/ChangeBookingTime',
+                            data: {
+                                'Id': event.eventID,
+                                'UserId': event.user_id,
+                                'RoomId': event.resourceId,
+                                'GuestId': event.client_id,
+                                'BookingHasPayed': event.BookingHasPayed,
+                                'BookingIsCreated': true,
+                                'CheckIn': event.start.toJSON(),
+                                'CheckOut': event.end.toJSON(),
+                                'BookingInfo': event.description,
+                                'NbPerson': event.NbPerson,
+                                'GuestFirstName': event.GuestFirstName,
+                                'GuestLastName': event.GuestLastName,
+                                'Email': event.GuestEmail,
+                                'GuestPhone': event.GuestPhone,
+                                'GuestInfo': event.GuestInfo,
+                            },
+                            success: function (data) {
+                                console.log(data.status);
+                                if (data.status) {
+                                    //Refresh the calender
+                                    FetchEventAndRenderCalendar();
+                                    $('#myModalSave').modal('hide');
+                                }
+                            },
+                            error: function () {
+                                alert('Failed');
+                            }
+                        });
+                    },
+
+                    
+
+                    schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+                    contentHeight: 700,
+                    defaultDate: new Date(),
+                    timeFormat: 'h(:mm)a',
+                    displayEventTime: false,
+                    defaultView: 'timelineMonth',
+                    resourceGroupField: 'building',
+                    resourceLabelText: 'Room',
+                    resources: resources,
+                    resourceColumns: [
+                        {
+                            width: 150,
+                            field: "title",
+                        },
+                    ],
+                    eventColor: '#378006',
+                    events: events,
+                    selectable: true,
+                    header: {
+                        left: 'today prev,next',
+                        center: 'title',
+                        right: 'timelineMonth,timelineYear'
+                    },
+                    eventClick: function (calEvent, jsEvent, view) {
+
+                        selectedEvent = calEvent;
+
+                        $('#myModal #eventTitle').text(calEvent.title);
+
+                        var $description = $('<div/>');
+
+                        $description.append($('<p/>').html('<b>Check-In :</b> ' + calEvent.start.format("DD-MMM-YYYY")));
+
+                        if (calEvent.end != null) {
+                            $description.append($('<p/>').html('<b>Check-Out :</b> ' + calEvent.end.format("DD-MMM-YYYY")));
+                        }
+
+                        $description.append($('<p/>').html('<b>Booking Info:</b>'
+                            + "<pre> Number of Guests : "+ calEvent.NbPerson + "</pre>"
+                            + "<pre> Type Of Room : "    + calEvent.TypeRoomName + "</pre>"
+                            + "<pre> Room Num : "        + calEvent.resourceId + "</pre>"
+                            + "<pre> Additional Info : " + calEvent.description + "</pre>"
+                            + "<br>"
+                        ));
+
+                        $description.append($('<p/>').html('<b>Guest Infos :</b>'
+                            + "<pre> Full Name: "       + calEvent.GuestFirstName + " " + calEvent.GuestLastName + "</pre>"
+                            + "<pre> Email: "           + calEvent.GuestEmail + "</pre>"
+                            + "<pre> Phone: "           + calEvent.GuestPhone + "</pre>"
+                            + "<pre> Additional Info : "+ calEvent.GuestInfo + "</pre>"
+                            + "<br>"
+                        ));
+
+                        $('#myModal #pDetails').empty().html($description);
+                        //deactivate button
+                        if (calEvent.reason_id > 3) {
+                            $('#btnApprove').prop('disabled', true);
+                        } else {
+                            $('#btnApprove').prop('disabled', false);
+                        }
+                        $('#myModal').modal();
+                    },
+
+                    select: function (start, end, jsEvent, view, resource) {
+                        if (start.isBefore(moment())) {
+                            $("#calendar").fullCalendar("unselect");
+                            return false;
+                        }
+                        selectedEvent = {
+                            
+                            eventID: 0,
+                            title: "",
+                            description: "",
+                            user_id: 0,
+                            state_id: 0,
+                            resourceId: resource.id,
+                            client_id: 0,
+                            isActive: true,
+                            start: start,
+                            end: end,
+                            create_date: moment(Date.now()),
+                            last_update: moment(Date.now()),
+                            NbPerson: 0,
+                            GuestFirstName: "",
+                            GuestLastName: "",
+                            GuestInfo: "",
+                            GuestEmail: "",
+                            GuestPhone: "",
+                            user_id: 0,
+                            BookingHasPayed: false,
+                            color: ""
+                        };
+
+                        openAddEditForm();
+                        $('#calendar').fullCalendar('unselect');
+                    }
+                });
+            }
+
+            $("#btnEdit").click(function () {
+                //Open modal dialog for edit event
+                openAddEditForm();
+            })
+            $("#btnDelete").click(function () {
+                if (selectedEvent != null && confirm("Are you Sure ?!")) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/booking/DeleteBooking",
+                        data: { 'eventID': selectedEvent.eventID },
+                        success: function (data) {
+                            if (data.status) {
+                                //Refresh the calendar
+                                FetchEventAndRenderCalendar();
+                                $('#myModal').modal("hide");
+                            }
+                        },
+                        error: function () {
+                            alert("Failed");
+                        }
+                    })
+                }
+                console.log(selectedEvent, "selectedEvent in btnDelete")
+            })
+           
+            function openAddEditForm() {
+                //console.log(selectedEvent["NbPerson"], "events........................");
+                if (selectedEvent != null) {
+                    $('#hdBookingId').val(selectedEvent.eventID);
+                    $("#hdUserId").val(selectedEvent.user_id);
+                    $("#hdRoomID").val(selectedEvent.resourceId); // ++
+                    $("#hdGuestId").val(selectedEvent.client_id); // ++
+                    $("#hdIsActiveBooking").val(selectedEvent.isActive);
+                    $("#hdHasPayedBooking").val(selectedEvent.BookingHasPayed);
+                    $("#hdIsCreatedBooking").val(selectedEvent.isCreated);  // ++
+                    $('#txtStart').val(selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
+                    $('#txtEnd').val(selectedEvent.end.format('DD/MM/YYYY HH:mm A'));
+                    $('#txtDescription').val(selectedEvent.description);
+                    $('#txtNbPerson').val(selectedEvent.NbPerson); // ++
+                    $('#txtFirstName').val(selectedEvent.GuestFirstName); //++
+                    $('#txtLastName').val(selectedEvent.GuestLastName);//++
+                    $('#txtEmail').val(selectedEvent.GuestEmail);//++
+                    $('#txtPhone').val(selectedEvent.GuestPhone);//++
+                    $('#txtAddInfo').val(selectedEvent.GuestInfo);//++
+                }
+                $('#myModal').modal('hide');
+                $('#myModalSave').modal();
+            }
+
+            $('#btnSave').click(function () {
+                //Validation/
+                //if ($('#txtSubject').val().trim() == "") {
+                //    alert('Subject required');
+                //    return;
+                //}
+                //if ($('#txtStart').val().trim() == "") {
+                //    alert('Start date required');
+                //    return;
+                //}
+                //if ($('#txtEnd').val().trim() == "") {
+                //    alert('Start date required');
+                //    return;
+                //}
+                //if ($('#txtDescription').val().trim() == "") {
+                //    alert('Start date required');
+                //    return;
+                //}
+                var startDate = moment($('#txtStart').val(), "DD/MM/YYYY HH:mm A").toDate();
+                var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm A").toDate();
+                if (startDate > endDate) {
+                    alert('Invalid end date');
+                    return;
+                }
+                // console.log($('#hdEventID').val());
+                var data = {
+                    Id: $('#hdBookingId').val(),
+                    UserId: $("#hdUserId").val(),
+                    RoomId: $("#hdRoomID").val(),
+                    GuestId: $('#hdGuestId').val(),
+                    BookingHasPayed: $('#hdHasPayedBooking').val(),
+                    BookingIsCreated: $('#hdIsCreatedBooking').val(),
+                    CheckIn: $('#txtStart').val().trim(), //$('#txtStart').val(selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
+                    CheckOut: $('#txtEnd').val().trim(),
+                    BookingInfo: $('#txtDescription').val().trim(),
+                    NbPerson: $('#txtNbPerson').val(),
+                    GuestFirstName: $("#txtFirstName").val(),
+                    GuestLastName: $("#txtLastName").val(),
+                    Email: $("#txtEmail").val(),
+                    GuestPhone: $("#txtPhone").val(),
+                    GuestInfo: $("#txtAddInfo").val()
+                }
+                SaveEvent(data);
+                // call function for submit data to the server
+            });
+
+            function SaveEvent(data) {
+                $.ajax({
+                    type: "POST",
+                    url: '/booking/SaveBooking',
+                    data: data,
+                    success: function (data) {
+                        if (data.status) {
+                            //Refresh the calender
+                            FetchEventAndRenderCalendar();
+                            $('#myModalSave').modal('hide');
+                        }
+                    },
+                    error: function () {
+                        alert('Failed');
+                    }
+                });
+            }
+
+            $('#dtp1,#dtp2').datetimepicker({
+                format: 'DD/MM/YYYY HH:mm A'
+            });
+
+        })
+    </script>
+}

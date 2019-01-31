@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNet.Identity
+@using HotelManager.Help
+
+@if (UserSession.CurrentUser != null)
+{
+    using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        @Html.ActionLink("Bonjour " + UserSession.CurrentUser.LastName + " " + UserSession.CurrentUser.FirstName + " !", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+
+        @if (UserSession.CurrentUser.Id_profil == 1)
+        {
+        <li>@Html.ActionLink("Ajouter un utilisateur", "Register", "User", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        }
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Se déconnecter</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Se connecter", "Index", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
