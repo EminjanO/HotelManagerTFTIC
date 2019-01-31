@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using HotelManager.DAL.Repository;
 using HotelManager.DAL.Entity;
 using System.Reflection;
+using HotelManager.Help;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace DebugConsole
 {
@@ -28,20 +30,52 @@ namespace DebugConsole
             //int gint = UnitOfWork.Instance.GuestRepository.Insert(ginsert);
             //Console.WriteLine(gint);
 
-            //Guest g = UnitOfWork.Instance.GuestRepository.Get(1);
-            User g = UnitOfWork.Instance.UserRepository.Get(1);
 
-            List<User> gs = UnitOfWork.Instance.UserRepository.GetAll().ToList();
+            //List<User> gs = UnitOfWork.Instance.UserRepository.GetAll().ToList();
+
+            //foreach (User guest in gs)
+            //{
+            //    Console.WriteLine("----");
+            //    foreach (PropertyInfo item in guest.GetType().GetProperties())
+            //    {
+            //        Console.WriteLine(item.GetValue(guest));
+            //    }
+            //}
 
 
-            foreach (User guest in gs)
-            {
-                Console.WriteLine("----");
-                foreach (PropertyInfo item in guest.GetType().GetProperties())
-                {
-                    Console.WriteLine(item.GetValue(guest));
-                }
-            }
+
+
+            //STBookingGuest bookGuest = new STBookingGuest
+            //{
+            //    Id = 1,
+            //    Userid = 1,
+            //    RoomId = 1,
+            //    GuestId = 1,
+            //    BookingHasPayed = true,
+            //    BookingIsCreated = true,
+            //    CheckIn = DateTime.Now,
+            //    CheckOut = DateTime.Now,
+            //    BookingInfo = "Bonjour",
+            //    NbPerson = 3,
+            //    GuestFirstName = "Eminjan",
+            //    GuestLastName = "Obama",
+            //    Email = "Barack.obama@us.us",
+            //    GuestPhone = "86741654",
+            //    GuestInfo = "USA President"
+            //};
+
+            //int result = UnitOfWork.Instance.STBookingGuestRepository.Insert(bookGuest);
+
+            //Console.WriteLine(result);
+
+            //Console.WriteLine(UnitOfWork.Instance.UserRepository.CheckUser("wil.wil@email.com", "test1234="));
+
+            //Task<List<IListBlobItem>> v = BlobStockage.GetBlobPhoto("hotelmanagerphoto");
+            //foreach(var i in v.Result)
+            //{
+            //    Console.WriteLine(i.Uri);
+            //}
+            //Console.WriteLine(BlobStockage.GetBlobPhoto("hotelmanagerphoto"));
             Console.ReadLine();
         }
     }

@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,6 +53,10 @@
     <ProjectReference Include="..\HotelManager.DAL\HotelManager.DAL.csproj">
       <Project>{cbf4f295-71fe-43a0-9ed0-2c091eb1dbe2}</Project>
       <Name>HotelManager.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HotelManager\HotelManager.csproj">
+      <Project>{8A66AB13-7AA9-4340-860C-8AC68961C81C}</Project>
+      <Name>HotelManager</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
