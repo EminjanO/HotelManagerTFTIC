@@ -70,14 +70,12 @@ INSERT INTO profil (profil_name) VALUES
 ('Receptionist'),
 ('Employee')
 
-INSERT INTO [user] (lastName, firstName, id_profil) VALUES
+INSERT INTO [user] (lastName, firstName, id_profil, ) VALUES
 ('Wauters', 'William', 1),
 ('Eminjan', 'Eminjan', 1),
 ('Jean', 'Paul', 2),
 ('Marc', 'Pierre', 2),
 ('Mathieu', 'Jesus', 3)
-
-
 
 --NEED ID USER
 INSERT INTO booking (check_in, check_out, nb_night, nb_person, id_guest, id_room, id_user) VALUES

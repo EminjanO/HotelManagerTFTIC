@@ -1,4 +1,137 @@
-USE HotelManager;  
+Go
+create Procedure AddUser
+@firstName varchar(50),
+@lastName varchar(50),
+@id_profil int,
+@Email varchar(384),
+@Passwd varchar(20)
+As
+Begin
+	insert into [User] (firstName, lastName, id_profil, Email, HashPassword) values (@firstName, @lastName, @id_profil, @Email, HASHBYTES('MD5', @Passwd));
+End
+Go
+
+create Procedure CheckUser
+@Email varchar(384),
+@Passwd varchar(20)
+As
+Begin
+	select Email from [User] where Email = @Email and HashPassword = HASHBYTES('MD5', @Passwd);
+End
+Go
+
+EXECUTE AddUser 'William', 'Wauters', 1, 'wil.wil@email.com', 'test1234='
+EXECUTE AddUser 'Eminjan', 'Obulkasim', 1, 'Eminjan@email.com', 'test1234='
+
+EXECUTE CheckUser 'wil.wil@email.com', 'test1234=' 
+
+
+GO 
+CREATE PROCEDURE InsertBookingGuest
+	@user_id int,
+	@room_id int,
+	@check_in DATETIME,
+	@check_out DATETIME,
+	@Booking_info VARCHAR(255) = NULL,
+	@nb_person int,
+	@guest_firstname varchar(60),
+	@guest_lastname varchar(60),
+	@guest_email varchar(255),
+	@guest_phone varchar(50),
+	@guest_info varchar(255) = NULL
+AS  
+    SET NOCOUNT ON;
+	
+	DECLARE @guestID int;
+	DECLARE @bookingID int;
+
+    INSERT INTO guest (firstname, lastname, email, phone, add_info) VALUES (@guest_firstname, @guest_lastname, @guest_email, @guest_phone, @guest_info);
+	SET @guestID = SCOPE_IDENTITY();
+
+    INSERT INTO Booking (check_in, check_out, nb_night, nb_person, add_info, id_guest, id_room, id_user) VALUES (@check_in, @check_out, DATEDIFF(day, @check_out, @check_in ), @nb_person, @Booking_info, @guestID, @room_id, @user_id);  
+	SET @bookingID = SCOPE_IDENTITY();
+	
+	SELECT @bookingID;
+GO
+
+
+
+
+
+GO 
+CREATE PROCEDURE UpdateBookingGuest
+	@booking_id int,
+	@user_id int,
+	@room_id int,
+	@guest_id int,
+	@booking_has_payed bit,
+	@booking_is_created bit,
+	@check_in DATETIME,
+	@check_out DATETIME,
+	@Booking_info VARCHAR(255),
+	@nb_person int,
+	@guest_firstname varchar(60),
+	@guest_lastname varchar(60),
+	@guest_email varchar(255),
+	@guest_phone varchar(50),
+	@guest_info varchar(255) = NULL
+AS  
+    SET NOCOUNT OFF;
+	UPDATE guest 
+	SET firstname = @guest_firstname, 
+		lastname = @guest_lastname,
+		email = @guest_email,
+		phone = @guest_phone,
+		add_info = @guest_info,
+		last_update = GETDATE()
+	WHERE id = @guest_id
+	
+	UPDATE booking 
+	SET hasPayed = @booking_has_payed,
+		isCreated = @booking_is_created,
+		check_in = @check_in,
+		check_out = @check_out,
+		add_info = @Booking_info,
+		nb_person = @nb_person,
+		last_update = GETDATE(),
+		id_room = @room_id,
+		id_user = @user_id		
+	WHERE id = @booking_id
+GO
+
+SELECT 
+
+
+EXECUTE GetAllBookingVM
+
+@booking_id int,
+	@user_id int,
+	@room_id int,
+	@guest_id int,
+	@booking_has_payed bit,
+	@booking_is_created bit,
+	@check_in DATETIME,
+	@check_out DATETIME,
+	@Booking_info VARCHAR(255),
+	@nb_person int,
+	@guest_firstname varchar(60),
+	@guest_lastname varchar(60),
+	@guest_email varchar(255),
+	@guest_phone varchar(50),
+	@guest_info varchar(255) = NULL
+
+
+
+GO 
+CREATE PROCEDURE GetBookingGuest
+AS   
+    SET NOCOUNT ON;
+	SELECT b.id, b.id_user, b.id_room, b.id_guest, b.hasPayed, b.isCreated, b.check_in, b.check_out, b.add_info,  
+	FROM booking b
+	JOIN guest g ON g.id = b.id_guest  
+GO
+
+
 GO 
 CREATE PROCEDURE InsertGuest
 	@firstname varchar(60),
